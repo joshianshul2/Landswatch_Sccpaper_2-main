@@ -1,0 +1,11 @@
+*.pyc  
+*~  
+__pycache__  
+myvenv  
+db.sqlite3    
+.DS_Store
+/media 
+.vscode/
+
+# Project exclude paths
+/venv/

@@ -1,0 +1,612 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Land Stuff Alert</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'template.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <style>
+        .div-table {
+  display: table;
+  width: auto;
+  background-color: #eee;
+  border: 1px solid #666666;
+  border-spacing: 5px; /* cellspacing:poor IE support for  this */
+}
+.div-table-row {
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+.div-table-col {
+  float: left; /* fix for  buggy browsers */
+  display: table-column;
+  width: 200px;
+  background-color: #ccc;
+}
+        * {
+  box-sizing: border-box;
+}
+.aParent div {
+    float: left;
+    clear: none;
+}
+.box {
+  float: left;
+  width: 83.33%;
+  padding: 50px;
+    margin-left: 120px;
+    border: 2px  ;
+    border-radius: 25px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+        .boxed {
+  border: 1px solid green ;
+}
+.triangle-up {
+	width: 0;
+	height: 0;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-bottom: 50px solid green;
+    color: darkgreen;
+}
+.collapsible {
+  background-color: #0b2e13;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #0b2e13;
+}
+  </style>
+      <style>
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.pointer {cursor: pointer;}
+</style>
+
+<!--      Download Script in JS-->
+      <script type="text/javascript">
+	function downloadCSV(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+    // CSV file
+    csvFile = new Blob([csv], {type: "text/csv"});
+
+    // Download link
+    downloadLink = document.createElement("a");
+
+    // File name
+    downloadLink.download = filename;
+
+    // Create a link to the file
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // Hide download link
+    downloadLink.style.display = "none";
+
+    // Add the link to DOM
+    document.body.appendChild(downloadLink);
+
+    // Click download link
+    downloadLink.click();
+}
+function exportTableToCSV(filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+
+        for (var j = 0; j < cols.length; j++)
+            row.push(cols[j].innerText);
+
+        csv.push(row.join(","));
+    }
+
+    // Download CSV file
+    downloadCSV(csv.join("\n"), filename);
+}
+</script>
+
+
+      <script>
+var city;
+function anji() {
+  var city=document.getElementById("city").value;
+<!--  alert(city)-->
+  document.getElementById("city").innerHTML = city;
+<!--  document.getElementById("demo").innerHTML = "Paragraph changed!";-->
+<!--  location.replace("https://www.apple.com")-->
+  var viewCountMin=document.getElementById("viewCountMin").value;
+<!--  alert(viewCountMin)-->
+  var viewCountMax=document.getElementById("viewCountMax").value;
+<!--  alert(viewCountMax)-->
+  var publishDateMin=document.getElementById("publishDateMin").value;
+<!--  alert(publishDateMin)-->
+  var publishDateMax=document.getElementById("publishDateMax").value;
+<!--  alert(publishDateMax)-->
+  var types=document.getElementById("types").value;
+<!--  alert(types)-->
+  var status=document.getElementById("status").value;
+<!--  alert(status)-->
+  var view_acres=document.getElementById("view_acres").value;
+<!--  alert(view_acres)-->
+<!--  alert("Rishu")-->
+<!--  alert("Anshul"+"Joshi")-->
+<!--  alert("?title_contains="+city+status)-->
+<!--  alert("?title_contains="+city+"&"+"view_count_min="+viewCountMin+"&view_count_max="+viewCountMax+"&date_min="+publishDateMin+"&date_max="+publishDateMax+"&types="+types+"&status="+status+"&view_acres="+view_acres+"&")-->
+<!--  alert("Shbhu")-->
+  a="?title_contains="+city+"&"+"view_count_min="+viewCountMin+"&view_count_max="+viewCountMax+"&date_min="+publishDateMin+"&date_max="+publishDateMax+"&types="+types+"&status="+status+"&view_acres="+view_acres+"&";
+<!--  alert(a)-->
+  return a;
+<!--  window.location.href = "http://stackoverflow.com";-->
+<!--  window.location.href = "https://www.google.com";-->
+<!--  window.location.replace('http://www.google.com')-->
+<!--  window.location.assign('http://www.google.com')-->
+<!--  window.location.href = 'http://www.google.com'-->
+<!--  document.location.href = '/path'-->
+
+}
+
+
+</script>
+
+           <script>
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[0];
+      y = rows[i + 1].getElementsByTagName("TD")[0];
+      //check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
+
+<script>
+function myFunction(page) {
+<!--  alert(page)-->
+  var b=anji()
+  alert(b)
+<!--  http://127.0.0.1:8000/show/?title_contains=$city/page=2-->
+  location.replace("http://www.cheaplandsearch.com/show/" + "?"+ b + page=2")
+<!--    return b;-->
+}
+
+
+
+</script>
+
+
+      <script>
+          function rishu() {
+
+  location.replace("http://127.0.0.1:8000/show/")
+
+
+}
+      </script>
+
+
+      <script>
+          function rishucsv() {
+
+<!--  location.replace("http://127.0.0.1:8000/bahu.jpg")-->
+
+  location.replace("http://www.cheaplandsearch.com/bahu.jpg")
+
+}
+      </script>
+
+
+      <script type="text/javascript">
+	function downloadCSV(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+    // CSV file
+    csvFile = new Blob([csv], {type: "text/csv"});
+
+    // Download link
+    downloadLink = document.createElement("a");
+
+    // File name
+    downloadLink.download = filename;
+
+    // Create a link to the file
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // Hide download link
+    downloadLink.style.display = "none";
+
+    // Add the link to DOM
+    document.body.appendChild(downloadLink);
+
+    // Click download link
+    downloadLink.click();
+}
+function exportTableToCSV(filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+
+        for (var j = 0; j < cols.length; j++)
+            row.push(cols[j].innerText);
+
+        csv.push(row.join(","));
+    }
+
+    // Download CSV file
+    downloadCSV(csv.join("\n"), filename);
+}
+</script>
+      <script>
+function des()
+{
+    alert("Saved Successfully ")
+}
+
+      </script>
+      <script>
+function sortTable2(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable2");
+  switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc";
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+
+
+  </head>
+  <body>
+<nav class="nav nav-pills nav-justified" style="margin-top: 10px;">
+        <br>
+        <div class="triangle-up" style="margin-left: 10px;"></div>
+    <h2> <b>Logo</b></h2>
+        <ul style="margin-left: 1080px;margin-top: 10px;">
+{#            <a href="{% url 'loader'%}"><img src="{% static 'a.svg' %}" height="40" width="40" /></a>#}
+{##}
+  <a  href="{% url 'logout'%}" ><button class="btn btn-primary"  value="Logout" >Logout</button></a>
+<!--            <form action="logout_view">-->
+<!--    <input class="btn btn-primary" type="submit" value="Logout" />-->
+<!--</form>-->
+        </ul>
+{#         &nbsp;<h2>Set Alert</h2>#}
+
+
+</nav>
+  <section style="margin-top:-10px;">
+<div class="clearfix" style="margin-top: 10px;">
+  <div class="box " style="background-color:#696969; margin-top: 110px;">
+<h1 style="color: white;margin-left: 10px;">Cheap Land Search</h1>
+  </br>
+
+
+
+         <form method="POST" action="/RatioDetailsTemp">
+       {%  csrf_token %}
+        <div class="form-row" style="padding-left:10px;">
+                <div class="form-group col-md-2 col-lg-2">
+
+                    <label for="view_state">State</label>
+                    <select class="form-control" style="height:40px;width:150px;" name="view_state">
+
+<!--{% for entry in anji %}-->
+<!--    <option value="{{ entry.state }}">{{ entry.state }}</option>-->
+<!--{% endfor %}-->
+<!--</select>-->
+
+
+                        <option value="AL">State ...</option>
+<!--	<option value="Alaska">Alaska</option>-->
+	<option value="Arizona">Arizona</option>
+<!--	<option value="Arkansas">Arkansas</option>-->
+	<option value="California">California</option>
+<!--	<option value="Colorado">Colorado</option>-->
+<!--	<option value="Connecticut">Connecticut</option>-->
+<!--	<option value="Delaware">Delaware</option>-->
+<!--	<option value="District Of Columbia">District Of Columbia</option>-->
+	<option value="Florida">Florida</option>
+	<option value="Georgia">Georgia</option>
+	<option value="Hawaii">Hawaii</option>
+<!--	<option value="Idaho">Idaho</option>-->
+	<option value="Illinois">Illinois</option>
+<!--	<option value="Indiana">Indiana</option>-->
+<!--	<option value="Iowa">Iowa</option>-->
+<!--	<option value="Kansas">Kansas</option>-->
+<!--	<option value="Kentucky">Kentucky</option>-->
+	<option value="Louisiana">Louisiana</option>
+<!--	<option value="Maine">Maine</option>-->
+<!--	<option value="Maine">Maine</option>-->
+<!--	<option value="Massachusetts">Massachusetts</option>-->
+<!--	<option value="Michigan">Michigan</option>-->
+<!--	<option value="Minnesota">Minnesota</option>-->
+	<option value="Mississippi">Mississippi</option>
+	<option value="Missouri">Missouri</option>
+<!--	<option value="Montana">Montana</option>-->
+	<option value="Nebraska">Nebraska</option>
+<!--	<option value="Nevada">Nevada</option>-->
+<!--	<option value="New Hampshire">New Hampshire</option>-->
+	<option value="New Jersey">New Jersey</option>
+	<option value="New Mexico">New Mexico</option>
+	<option value="New York">New York</option>
+	<option value="North Carolina">North Carolina</option>
+<!--	<option value="North Dakota">North Dakota</option>-->
+	<option value="Ohio">Ohio</option>
+	<option value="Oklahoma">Oklahoma</option>
+	<option value="Oregon">Oregon</option>
+<!--	<option value="Pennsylvania">Pennsylvania</option>-->
+<!--	<option value="Rhode Island">Rhode Island</option>-->
+<!--	<option value="South Carolina">South Carolina</option>-->
+	<option value="South Dakota">South Dakota</option>
+<!--	<option value="Tennessee">Tennessee</option>-->
+	<option value="Texas">Texas</option>
+	<option value="Utah">Utah</option>
+<!--	<option value="Vermont">Vermont</option>-->
+	<option value="Virginia">Virginia</option>
+	<option value="Washington">Washington</option>
+<!--	<option value="West Virginia">West Virginia</option>-->
+	<option value="Wisconsin">Wisconsin</option>
+	<option value="Wyoming">Wyoming</option>
+</select>
+
+<!--            <label for="view_state">State</label>-->
+<!--            <input type="text"  class="form-control" id="view_state" value="{{ view_state }}" placeholder="State" name="view_state">-->
+
+            </div>
+            <div class="form-group col-md-2 col-lg-2">
+            <label for="view_percentage" >Price Percentage</label>
+                <input style="height:40px;width:150px;" type="number" step="0.01" class="form-control" id="view_percentage" value="{{ view_percentage }}" placeholder="% in Price" name="view_percentage">
+          </div>
+            <br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button type="submit2" class="btn btn-danger" style="width: 20%; margin-top: 23px; height: 50px;">Alert</button>
+
+</div>
+&nbsp;&nbsp;
+
+
+<!--        <button id="myText" type="submit" class="btn btn-primary" onclick="anji()">Search</button>-->
+          <button type="button" class="btn btn-light" onclick="rishu()">Clear</button>
+
+
+      </form>
+
+
+
+    </main>
+  </div>
+</div>
+  </section>
+
+      <hr />
+
+
+    </main>
+    <section>
+        <div align="center" >
+
+
+  <div align="right" style="margin-right:20px;">
+<!--            <a  href="bahu.jpg" download="CheapLandSearch">-->
+                <button class="btn btn-primary" style="margin-left: 1000px;" onclick="exportTableToCSV('AJ.csv')">Export To Excel </button>
+
+<!--            </a>-->
+
+
+
+</div>
+
+<b><h1 style="color: #2b542c;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size: 60px;">Property data</h1></b>
+
+<!--<p>Click the button to sort the table alphabetically, by name:</p>-->
+<!--<p><button onclick="sortTable2(0)"><i class="arrow up"></i></button></p>-->
+<!--            <p><button onclick="sortTable2(1)"><i class="arrow down"></i></button></p>-->
+
+<!--            ANji-->
+
+
+
+<table id="myTable2" border="1"  style="margin-left: 10px;width: 50%;">
+<tr style="background-color: #2b542c;color: whitesmoke;">
+
+
+    <td style="width:350px; height:50px;">
+        <div class="form-row">
+        &nbsp&nbsp&nbsp&nbspState
+            &nbsp&nbsp
+<p class="pointer" onclick="sortTable2(1)"> &uarr;</p>
+            &nbsp
+<p class="pointer" onclick="sortTable2(0)"> &darr;</p>
+<!--        <p><button onclick="sortTable2(0)"><i class="arrow up"></i></button></p>-->
+<!--            <p><button onclick="sortTable2(1)"><i class="arrow down"></i></button></p>-->
+    </div>
+    </td>
+
+    <td>Price Percentage</td>
+    <td>Delete</td>
+
+
+</tr>
+    {% for prop in users %}
+<tr>
+    <td>{{ prop.state }}</td>
+    <td>{{ prop.percentage }}</td>
+    <td>
+    <form method="POST" action="/delete" >
+
+
+                         {% csrf_token %}
+
+                <input  class="form-control" id="" value="{{ prop.id }}" style="visibility: hidden;" placeholder="Anshul" name="rishu">
+
+        <button style="margin-top:-30px;" class="btn btn-primary" type="submit" onclick="">
+							Delete
+						</button>
+        </form>
+
+    </td>
+
+
+
+</tr>
+
+{% endfor %}
+
+
+
+</table>
+<br>
+            <br>
+
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

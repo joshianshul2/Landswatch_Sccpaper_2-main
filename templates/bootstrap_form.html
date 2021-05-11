@@ -1,0 +1,611 @@
+{% load static %}
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Land Stuff</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'template.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <style>
+        .div-table {
+  display: table;
+  width: auto;
+  background-color: #eee;
+  border: 1px solid #666666;
+  border-spacing: 5px; /* cellspacing:poor IE support for  this */
+}
+.div-table-row {
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+.div-table-col {
+  float: left; /* fix for  buggy browsers */
+  display: table-column;
+  width: 200px;
+  background-color: #ccc;
+}
+        * {
+  box-sizing: border-box;
+}
+.aParent div {
+    float: left;
+    clear: none;
+}
+.box {
+  float: left;
+  width: 83.33%;
+  padding: 50px;
+    margin-left: 120px;
+    border: 2px  ;
+    border-radius: 25px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+        .boxed {
+  border: 1px solid green ;
+}
+.triangle-up {
+	width: 0;
+	height: 0;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-bottom: 50px solid green;
+    color: darkgreen;
+}
+.collapsible {
+  background-color: #0b2e13;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #0b2e13;
+}
+
+.pointer {cursor: pointer;}
+  </style>
+      <script>
+var city;
+function anji() {
+  var city=document.getElementById("city").value;
+  document.getElementById("city").innerHTML = city;
+
+  var viewCountMin=document.getElementById("viewCountMin").value;
+  var viewCountMax=document.getElementById("viewCountMax").value;
+  var publishDateMin=document.getElementById("publishDateMin").value;
+  var publishDateMax=document.getElementById("publishDateMax").value;
+  var types=document.getElementById("types").value;
+  var status=document.getElementById("status").value;
+  var view_acres=document.getElementById("view_acres").value;
+  a="?title_contains="+city+"&"+"view_count_min="+viewCountMin+"&view_count_max="+viewCountMax+"&date_min="+publishDateMin+"&date_max="+publishDateMax+"&types="+types+"&status="+status+"&view_acres="+view_acres+"&";
+  return a;
+
+}
+
+
+</script>
+
+<script>
+function myFunction(page) {
+  var b=anji()
+  location.replace("http://www.cheaplandsearch.com/show/" + "?"+ b + page2 );
+}
+
+
+
+</script>
+
+
+      <script>
+          function rishu() {
+
+  location.replace("http://127.0.0.1:8000/show/")
+
+}
+      </script>
+
+
+      <script>
+          function rishucsv() {
+
+
+  location.replace("http://www.cheaplandsearch.com/bahu.jpg")
+
+}
+      </script>
+
+      <script>
+function sortTable2(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable2");
+  switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc";
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+
+      <script type="text/javascript">
+	function downloadCSV(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+    // CSV file
+    csvFile = new Blob([csv], {type: "text/csv"});
+
+    // Download link
+    downloadLink = document.createElement("a");
+
+    // File name
+    downloadLink.download = filename;
+
+    // Create a link to the file
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // Hide download link
+    downloadLink.style.display = "none";
+
+    // Add the link to DOM
+    document.body.appendChild(downloadLink);
+
+    // Click download link
+    downloadLink.click();
+}
+function exportTableToCSV(filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+
+        for (var j = 0; j < cols.length; j++)
+            row.push(cols[j].innerText);
+
+        csv.push(row.join(","));
+    }
+
+    // Download CSV file
+    downloadCSV(csv.join("\n"), filename);
+}
+</script>
+
+
+
+  </head>
+  <body>
+
+
+<!--  <a href="javascript:myFunction();">Replace document</a>-->
+<nav class="nav nav-pills nav-justified" style="margin-top: 10px;">
+        <br>
+        <div class="triangle-up" style="margin-left: 10px;"></div>
+    <h2> <b>Logo</b></h2>
+        <ul style="margin-left: 1080px;margin-top: 10px;">
+{#            <a href="{% url 'loader'%}"><img src="{% static 'a.svg' %}" height="40" width="40" /></a>#}
+{##}
+
+
+
+
+            <a  href="{% url 'logout'%}" ><button class="btn btn-primary"  value="Logout" >Logout</button></a>
+<!--                <input class="btn btn-primary" type="submit" value="Logout" />-->
+
+
+
+
+
+        </ul>
+{#         &nbsp;<h2>Set Alert</h2>#}
+
+
+</nav>
+<!--<h1>{{ request.path }}</h1>-->
+  <section style="margin-top:-10px;">
+
+<div class="clearfix" style="margin-top: 10px;">
+
+  <div class="box " style="background-color:#696969; margin-top: 110px;">
+
+      <div align="right">
+                         <a href="/RatioDetailsTemp" target="_blank" style="color:black;"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+</svg>
+                             </a>
+      </div>
+      <h1 style="color: white;margin-left: 10px;">Cheap Land Search</h1>
+<!--      Rishu-->
+
+
+
+  </br>
+      <form method="GET" action="/show">
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group" >
+                    <input id='city' class="form-control py-2 border-right-0 border" style="text-transform: capitalize;" type="search" name="title_contains" value="{{ title_contains }}" placeholder="Enter a City , State or County ..."  required/>
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-2 col-lg-3">
+            <label for="viewCountMin">Minimum Price</label>
+            <input type="number"  step="0.01" min=0 class="form-control" id="viewCountMin" placeholder="0"  value="{{ view_count_min }}" name="view_count_min" >
+          </div>
+          <div class="form-group col-md-2 col-lg-2">
+            <label for="viewCountMax">Maximum Price</label>
+            <input type="number" step="0.01" max=1000000 class="form-control" id="viewCountMax" placeholder="1000000" value="{{ view_count_max }}" name="view_count_max" >
+          </div>
+          <div class="form-group col-md-2 col-lg-2">
+            <label for="publishDateMin">Publish date minimum</label>
+            <input type="date" class="form-control" value="{{ date_min }}" id="publishDateMin" placeholder=""  name="date_min" >
+          </div>
+          <div class="form-group col-md-2 col-lg-2">
+            <label for="publishDateMax">Publish date maximum</label>
+            <input type="date" class="form-control" value="{{ date_max }}" id="publishDateMax" placeholder="" name="date_max" >
+          </div>
+
+            <div class="form-group col-md-2 col-lg-2">
+            <label for="types">Types </label>
+            <input type="text"  class="form-control" id="types" style="width:230px;"  value="{{ types }}" placeholder="Types" name="types" >
+
+            </div>
+
+
+        </div>
+
+
+
+
+          <div class="form-row" style="padding-left:0px;">
+          <div class="form-group col-md-2 col-lg-2">
+            <label for="publishDateMin">Update min Date</label>
+            <input type="date"  class="form-control" value="{{ date_min2 }}" placeholder="2000-01-01" id="publishDateMin"  name="date_min2" >
+          </div>
+          <div class="form-group col-md-2 col-lg-2">
+            <label for="publishDateMax">Update Max Date</label>
+            <input type="date" class="form-control" value="{{ date_max2 }}"  placeholder="2050-01-01" id="publishDateMax"  name="date_max2" >
+          </div>
+
+                  <div class="form-group" >
+            <label for="status" value="{{ status }}">Status</label>
+            <select id="status" class="form-control"  style="width:150px;" name="status" >
+
+{#              {% for cat in queryset %}#}
+              <option value="{{status}}"  ></option>
+                <option>Active</option>
+                  <option>Under Contract</option>
+                  <option>Off Market </option>
+                  <option>Sold</option>
+{#              {% endfor %}#}
+            </select>
+          </div>
+
+
+            <div class="form-group col-md-2 col-lg-2">
+            <label for="view_acres">Acres</label>
+            <input type="number" step="0.01"  class="form-control" id="view_acres" value="{{ view_acres }}" placeholder="0" name="view_acres" >
+          </div>
+              </div>
+
+        <button id="myText" type="submit" class="btn btn-primary" onclick="anji()">Search</button>
+          <button type="button" class="btn btn-light" onclick="rishu()">Clear</button>
+
+      </form>
+
+
+{#  Anji#}
+<br>
+<button type="button" class="collapsible">Ratio Analyser</button>
+<div class="content">
+   <form method="GET" action="/Alert">
+       {%  csrf_token %}
+        <div class="form-row" style="padding-left:10px;">
+                <div class="form-group col-md-2 col-lg-2">
+            <label for="view_state">State</label>
+            <input type="text"  class="form-control" id="view_state" value="{{ view_state }}" placeholder="State" name="view_state">
+
+            </div>
+            <div class="form-group col-md-2 col-lg-2">
+            <label for="view_percentage">Price Percentage</label>
+                <input type="number" step="0.01" class="form-control" id="view_percentage" value="{{ view_percentage }}" placeholder="% in Price" name="view_percentage">
+          </div>
+            <br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button type="submit2" class="btn btn-danger" style="width: 20%; margin-top: 23px; height: 50px;">Alert</button>
+
+</div>
+&nbsp;&nbsp;</form>
+    </div>
+    </main>
+  </div>
+</div>
+  </section>
+
+      <hr />
+
+
+    </main>
+    <section>
+        <div align="center" >
+<!--              <button class="btn btn-primary" style="margin-left: 1000px;" onclick="exportTableToCSV('AJ.csv')">Export To Excel </button>-->
+<!--            <a class="btn btn-primary" onClick="rishucsv()" href="{% url 'show' %}" role="button">Download CSV</a>-->
+<!--            <button class="btn btn-primary" >CSV RISHU</button>-->
+
+  <div align="right" style="margin-right:20px;">
+            <a  href="bahu.jpg" download="CheapLandSearch">
+         <button class="btn btn-primary" type="button">Export To Excel</button>
+
+            </a>
+
+</div>
+
+
+<b><h1 style="color: #2b542c;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size: 60px;">Property data</h1></b>
+        {% if aj.UserPercentage == 0  %}
+
+
+    </div>
+    {% else %}
+<table id="myTable2"  border="1"  style="margin-left: 10px;width: 99%;">
+<tr style="background-color: #2b542c;color: whitesmoke;">
+<td>PropId</td>
+<td>Address</td>
+<td>City</td>
+<!--    <td>State</td>-->
+
+    <td>
+
+        State
+
+
+
+    </td>
+<!--<td>County</td>-->
+    <td style="width:350px; height:50px;">
+        <div class="form-row">
+        &nbsp&nbsp&nbsp&nbspCounty
+
+<p class="pointer" onclick="sortTable2(1)"> &uarr;</p>
+            &nbsp
+<p class="pointer" onclick="sortTable2(0)"> &darr;</p>
+
+    </div>
+    </td>
+<td>Zip Code</td>
+    <td>Net Price
+
+    </td>
+<td>Area</td>
+<td>Rate(Per Area)</td>
+    <td >Url</td>
+    <td>Types</td>
+    <td>Status</td>
+    <td>Created_At</td>
+    <td>Updated_At</td>
+    <td>Remark</td>
+
+</tr>
+
+
+{% for prop in users %}
+
+
+<tr>
+    <td>{{ prop.lwPropertyId }}</td>
+    <td>{{ prop.address }}</td>
+    <td>{{ prop.city }}</td>
+
+    <td>{{ prop.state }}</td>
+    <td>{{ prop.county }}</td>
+    <td>{{ prop.zip }}</td>
+    <td>{{ prop.price }}</td>
+    <td>{{ prop.acres }}</td>
+
+    <td>{{ prop.Rate |floatformat:2 }}</td>
+
+
+{#    <td>{{ prop.types }}</td>#}
+    <td style="width: 10px;"><a href=" {{ prop.Url }}" target="_blank">{{ prop.Url }}</a></td>
+    <td>{{ prop.types }}</td>
+    <td>{{ prop.status }}</td>
+<!--    <p>Published on {{ prop.created_at | date:"F d Y" }}</p>-->
+    <td>{{ prop.created_at }}</td>
+    <td>{{ prop.updated_at }}</td>
+
+    <td>
+      {% if prop.Descrpt  %}
+      <h1>Hello Vikram</h1>
+      {{ prop.Descrpt }}
+
+      {% else %}
+
+    <h1>  {{ prop.Descrpt }} </h1>
+
+    
+        {% endif %}
+    </td>
+
+
+
+</tr>
+{% endfor %}
+
+
+</table>
+    {% endif %}
+
+<br>
+
+
+        <nav aria-label="..." style="margin-left:20px;">
+
+ {% if users.has_other_pages %}
+    <ul class="pagination">
+          {% if users.has_previous %}
+                <li class="page-item active"><a class="page-link" href="?title_contains={{ title_contains|title }}&view_count_min={{ view_count_min }}&view_count_max= {{ view_count_max }}&date_min={{ date_min }}&date_max={{ date_max }}&types={{ types }}&date_min2={{ date_min2 }}&date_max2={{ date_max2 }}&status={{ status }}&view_acres={{ view_acres }}&page={{ users.previous_page_number }}" >Previous</a>
+                  </li>
+            </li>
+          {% else %}
+        <li class="page-item"><a class="page-link" href="#" >Previous</a>
+                  </li>
+        {% endif %}
+
+    {% for i in users.paginator.page_range %}
+      {% if users.number == i %}
+
+            <div>
+                <pdf:nextpage />
+            </div>
+        <li class="page-item active"><a class="page-link"  href="?title_contains={{ title_contains|title }}&view_count_min={{ view_count_min }}&view_count_max= {{ view_count_max }}&date_min={{ date_min }}&date_max={{ date_max }}&types={{ types }}&date_min2={{ date_min2 }}&date_max2={{ date_max2 }}&status={{ status }}&view_acres={{ view_acres }}&view_state={{ view_state }}&view_percentage={{ view_percentage }}&page={{ i }}">{{ i }}</a></li>
+<!--        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>-->
+      {% else %}
+       <li class="page-item  "><a class="page-link" href="?title_contains={{ title_contains|title }}&view_count_min={{ view_count_min }}&view_count_max= {{ view_count_max }}&date_min={{ date_min }}&date_max={{ date_max }}&types={{ types }}&date_min2={{ date_min2 }}&date_max2={{ date_max2 }}&status={{ status }}&view_acres={{ view_acres }}&view_state={{ view_state }}&view_percentage={{ view_percentage }}&page={{ i }}">{{ i }}</a></li>
+<!--        <li><a href="?page={{ i }}">{{ i }}</a></li>-->
+      {% endif %}
+    {% endfor %}
+
+
+         {% if users.has_next %}
+
+      <li class="page-item active"><a class="page-link" href="?title_contains={{ title_contains|title }}&view_count_min={{ view_count_min }}&view_count_max= {{ view_count_max }}&date_min={{ date_min }}&date_max={{ date_max }}&types={{ types }}&date_min2={{ date_min2 }}&date_max2={{ date_max2 }}&status={{ status }}&view_acres={{ view_acres }}&page={{ users.next_page_number }}">Next</a></li>
+    {% else %}
+      <li class="disabled"><span class="page-link">Next</span></li>
+    {% endif %}
+  </ul>
+            {% endif %}
+
+</nav>
+
+
+
+
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+
+
+
+
+<script>
+
+  $(function () {
+  
+    var saveForm = function (e) {
+    e.preventDefault();  
+    var form = $(this);
+    $.ajax({
+      url: '/disp/409192133',
+      type: GET,
+      dataType: 'text',
+      success: function (data) {
+        alert('hello')
+    },
+      error: function () {
+      alert(error)
+      },
+    });
+  };
+  
+  $("#MessageForm").on("submit", ".js-message", saveForm);
+  
+  });
+  
+  </script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
